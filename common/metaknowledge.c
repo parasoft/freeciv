@@ -127,10 +127,10 @@ static bool is_tile_seen_traderoute(const struct player *pow_player,
 static bool can_plr_see_all_sym_diplrels_of(const struct player *pplayer,
                                             const struct player *tplayer)
 {
-  if (pplayer == tplayer) {
+//  if (pplayer == tplayer) {
     /* Can see own relationships. */
-    return TRUE;
-  }
+//    return TRUE;
+//  }
 
   if (player_has_embassy(pplayer, tplayer)) {
     /* Gets reports from the embassy. */
@@ -181,7 +181,7 @@ static bool is_req_knowable(const struct player *pow_player,
         return prob_type == RPT_CERTAIN;
       }
 
-      return target_unit && can_player_see_unit(pow_player, target_unit);
+      return can_player_see_unit(pow_player, target_unit);
     case REQ_RANGE_CADJACENT:
     case REQ_RANGE_ADJACENT:
     case REQ_RANGE_CONTINENT:
@@ -213,11 +213,11 @@ static bool is_req_knowable(const struct player *pow_player,
     case USP_NATIVE_TILE:
     case USP_NATIVE_EXTRA:
       /* Known if the unit is seen by the player. */
-      return target_unit && can_player_see_unit(pow_player, target_unit);
+      return can_player_see_unit(pow_player, target_unit);
     case USP_HAS_HOME_CITY:
     case USP_MOVED_THIS_TURN:
       /* Known to the unit's owner. */
-      return target_unit && unit_owner(target_unit) == pow_player;
+      return unit_owner(target_unit) == pow_player;
     case USP_COUNT:
       fc_assert_msg(req->source.value.unit_state != USP_COUNT,
                     "Invalid unit state property.");
@@ -331,7 +331,7 @@ static bool is_req_knowable(const struct player *pow_player,
     case REQ_RANGE_COUNT:
       /* Invalid range */
       return FALSE;
-      break;
+//      break;
     }
   }
 
@@ -563,7 +563,6 @@ static bool is_req_knowable(const struct player *pow_player,
       || req->source.kind == VUT_TERRAINCLASS
       || req->source.kind == VUT_EXTRA
       || req->source.kind == VUT_EXTRAFLAG
-      || req->source.kind == VUT_BASEFLAG
       || req->source.kind == VUT_BASEFLAG) {
     if (target_tile == NULL) {
       /* The tile may exist but not be passed when the problem type is
